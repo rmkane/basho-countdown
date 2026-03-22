@@ -9,7 +9,7 @@
 
   const customWidgetTheme = mergeBashoTheme(CUSTOM_WIDGET_BASE)
 
-  const MS_PER_DAY = 86400000
+  const MS_PER_DAY = 86_400_000
 
   const simNow = new Date()
   simNow.setUTCHours(12, 0, 0, 0)

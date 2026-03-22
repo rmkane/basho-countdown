@@ -50,6 +50,18 @@
     return !searchHasAnyQueryKey(window.location.search, keys)
   }
 
+  function clearAllParams() {
+    if (typeof window === 'undefined') return
+    history.pushState(null, '', window.location.pathname)
+    navTick += 1
+  }
+
+  function clearAllParamsDisabled(): boolean {
+    navTick
+    if (typeof window === 'undefined') return true
+    return !window.location.search
+  }
+
   const page = $derived.by(() => {
     navTick
     const search = typeof window !== 'undefined' ? window.location.search : ''
@@ -85,12 +97,6 @@
       </div>
       <nav class="basho-countdown-home__nav" aria-label="Site">
         <a class="basho-countdown-home__btn" href="/demo">Component demos</a>
-        <a
-          class="basho-countdown-home__btn"
-          href={typeof window !== 'undefined' ? window.location.pathname : '/'}
-        >
-          Clear params
-        </a>
       </nav>
     </div>
   </header>
@@ -114,8 +120,18 @@
       <p class="basho-countdown-home__sidebar-lead">
         Add query params to this page’s URL. Hex colors work with or without <code>#</code>. Expand a
         section below — each row has <strong>Try example</strong> (merges into the URL) and
-        <strong>Clear</strong> (removes that row’s params). Use <strong>Clear params</strong> in the header
-        to strip the whole query string.
+        <strong>Clear</strong> (removes that row’s params). Use <strong>Clear all params</strong> below to
+        strip the whole query string.
+      </p>
+      <p class="basho-countdown-home__sidebar-actions">
+        <button
+          type="button"
+          class="basho-countdown-home__btn"
+          onclick={clearAllParams}
+          disabled={clearAllParamsDisabled()}
+        >
+          Clear all params
+        </button>
       </p>
 
       <details class="basho-countdown-home__accordion">
@@ -245,11 +261,6 @@
   </div>
 
   <footer class="basho-countdown-home__page-footer">
-    <div class="basho-countdown-home__page-footer-inner">
-      <p class="basho-countdown-home__footer-copy">
-        <strong>Basho countdown</strong> — Svelte widget + basho calendar logic. Build with
-        <code>pnpm run build</code>, serve <code>dist/</code> (e.g. <code>go run .</code>).
-      </p>
-    </div>
+    <p>Svelte countdown widget · basho calendar logic</p>
   </footer>
 </div>
